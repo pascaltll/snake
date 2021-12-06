@@ -7,6 +7,8 @@
 #include "head.h"
 #include "color.h"
 
+
+
 Snake snake;
 SnakeMap snake_map(&snake);
 
