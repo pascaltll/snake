@@ -3,7 +3,6 @@
 #include "input.h"
 #include "snake.h"
 #include "snake_map.h"
-#include <utility>
 #include "head.h"
 #include "color.h"
 
@@ -20,11 +19,12 @@ bool IsEnd() {
 }
 
 void GameOver() {
+    system("clear");
     std::cout << FRED("GAME  OVER") << std::endl;
     //cout << "\033[1;31mGAME  OVER\033[0m\n";
 }
 
-void StartGame() {
+void StartLoop() {
     while (true) {
         snake.UpdateMovement();
         if (IsEnd()) {
@@ -40,7 +40,7 @@ void StartGame() {
 }
 
 int main() {
-    //InputThread();
-    StartGame();
+    InputThread();
+    StartLoop();
     return 0;
 }

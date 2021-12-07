@@ -17,7 +17,7 @@
 #define SNAKE_TAIL '~'
 #define INITIAL_SNAKE_LENGTH 4
 
-//
+//-lpthread
 
 #define DELAY_TERMINAL 150000 // 0.15 us
 #endif //SNAKE_HEAD_H

@@ -2,11 +2,9 @@
 // Created by jc on 06.12.2021.
 //
 
-#include <iostream>
+
 #include <vector>
-#include <utility>
-#include <cstdlib>
-#include <ctime>
+#include <iostream>
 #include "head.h"
 #include "snake_map.h"
 #include "color.h"
@@ -41,9 +39,9 @@ void SnakeMap::Draw(void) {
         std::cout <<"+";
         for (auto j : i) {
             if ( j == SNAKE_FOOD_CHAR) {
-                cout << KGRN << j << FCYN(".");
+                std::cout << KGRN << j << FCYN(".");
             } else {
-                cout << KYEL << j << FCYN(".");
+                std::cout << KYEL << j << FCYN(".");
             }
 
         }
