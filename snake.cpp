@@ -2,7 +2,6 @@
 // Created by jc on 06.12.2021.
 //
 #include "snake.h"
-#include <pthread.h>
 #include <utility>
 #include "head.h"
 

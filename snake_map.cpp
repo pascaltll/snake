@@ -5,8 +5,8 @@
 #include <iostream>
 #include <vector>
 #include <utility>
-#include <stdlib.h>
-#include <time.h>
+#include <cstdlib>
+#include <ctime>
 #include "head.h"
 #include "snake_map.h"
 #include "color.h"
@@ -71,7 +71,7 @@ void SnakeMap::UpdateSnakeFood(bool force_update) {
 }
 
 void SnakeMap::UpdateScore(void){
-    std::cout << FMAG("Score:") << _snake->length - 3 << endl;
+    std::cout << FMAG("Score:") << _snake->length - INITIAL_SNAKE_LENGTH << endl;
 }
 
 void ClearMap(char map_array[MAP_HEIGHT][MAP_WIDTH]) {//re drawing matrix

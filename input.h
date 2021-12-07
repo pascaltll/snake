@@ -10,6 +10,6 @@ enum Direction {
     West = 0, North = 1, East = 2, South = 3
 };
 
-void InputOff();
+void InputThread();
 enum Direction GetInput();
 #endif //SNAKE_INPUT_H

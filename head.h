@@ -7,18 +7,18 @@
 
 #define MAP_WIDTH 20
 #define MAP_HEIGHT 20
-#define MAP_BARRIER '.'
 #define MAP_CHAR ' '
 #define SNAKE_CHAR '/'
 #define SNAKE_HEAD_WEST '<'
 #define SNAKE_HEAD_NORTH '^'
 #define SNAKE_HEAD_EAST '>'
 #define SNAKE_HEAD_SOUTH 'v'
-#define SNAKE_FOOD_CHAR '@'
+#define SNAKE_FOOD_CHAR 'O'
 #define SNAKE_TAIL '~'
-#define INITIAL_SNAKE_LENGTH 3
+#define INITIAL_SNAKE_LENGTH 4
 
+//
 
-
-#define PAUSE_LENGTH 1000 * 150 // 200 milliseconds
+#define DELAY_TERMINAL 150000 // 0.15 us
 #endif //SNAKE_HEAD_H
+
