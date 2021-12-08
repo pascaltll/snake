@@ -1,24 +1,35 @@
 //
-// Created by jc on 06.12.2021.
+// Created by jc on 08.12.2021.
 //
-#include "input.h"
-#include <termios.h>
-#include <unistd.h>
-#include <stdio.h>
 
+#include "head.h"
 
-struct termios t;
+void BufferToggle::Off() {
+        tcgetattr(STDIN_FILENO, &t); //get the current terminal I/O structure
+        t.c_lflag &= ~ICANON; //Manipulate the flag bits to do what you want it to do
+        tcsetattr(STDIN_FILENO, TCSANOW, &t); //Apply the new settings
+}
 
-void InputThread(){
-    tcgetattr(STDIN_FILENO, &t);//always invoke after tcserattr 0 ^ 1
-    t.c_lflag &= ~(ICANON | ECHO);//read the key in terminal and erease
-    tcsetattr(STDIN_FILENO, TCSANOW, &t);//read the falg
+void BufferToggle::On() {
+        tcgetattr(STDIN_FILENO, &t); //get the current terminal I/O structure
+        t.c_lflag |= ICANON; //Manipulate the flag bits to do what you want it to do
+        tcsetattr(STDIN_FILENO, TCSANOW, &t); //Apply the new settings
+}
+
+void* InputThreadWork(void* current) {
+    auto *snake = (struct Snake *)current;
+    while (true) {
+        enum Direction direction = GetInput();
+        snake->UpdateNextDirection(direction);
+    }
 }
 
 enum Direction GetInput() {
     enum Direction result = East;
     char user_input = getchar();
+    std::cout <<user_input <<std::endl;
     switch (user_input) {
+
         case 'a':
             result = West;
             break;
@@ -37,5 +48,3 @@ enum Direction GetInput() {
     }
     return result;
 }
-
-

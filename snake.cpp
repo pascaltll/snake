@@ -1,17 +1,9 @@
 //
-// Created by jc on 06.12.2021.
+// Created by jc on 08.12.2021.
 //
-#include "snake.h"
+
+#include <thread>
 #include "head.h"
-
-
-void* InputThreadWork(void *arg) {
-    auto *snake = (struct Snake *)arg;
-    while (true) {
-        enum Direction direction = GetInput();
-        snake->UpdateNextDirection(direction);
-    }
-}
 
 Snake::Snake(void) {
     _direction = East;
@@ -21,12 +13,12 @@ Snake::Snake(void) {
     length = INITIAL_SNAKE_LENGTH;
     ClearSnakeWorld();
     InitializeSnake();
-    sem_init(&_snake_sema, 0, 1);
-    pthread_create(&_input_thread, NULL, InputThreadWork, this);
+    pthread_create(&_input_thread, NULL, InputThreadWork, this);//
+    //std::thread t1(InputThreadWork(),this);
+
 }
 
 void Snake::UpdateDirection(enum Direction direction) {
-    sem_wait(&this->_snake_sema);
     switch (direction) {
         case West:
             if (this->_direction != East) {
@@ -49,7 +41,6 @@ void Snake::UpdateDirection(enum Direction direction) {
             }
             break;
     }
-    sem_post(&this->_snake_sema);
 }
 
 void Snake::UpdateNextDirection(enum Direction direction) {
@@ -57,10 +48,12 @@ void Snake::UpdateNextDirection(enum Direction direction) {
 }
 
 enum Direction Snake::GetDirection(void) {
-    enum Direction result = East;
-    sem_wait(&this->_snake_sema);
+    enum Direction result = this->_direction;
+    //sem_wait(&this->_snake_sema);
+
     result = this->_direction;
-    sem_post(&this->_snake_sema);
+
+    //sem_post(&this->_snake_sema);
     return result;
 }
 
@@ -75,16 +68,16 @@ void Snake::UpdateMovement(void) {
     enum Direction direction = GetDirection();
     switch (direction) {
         case West:
-            movement_part = make_pair(snake_head.first, snake_head.second - 1);
+            movement_part = std::make_pair(snake_head.first, snake_head.second - 1);
             break;
         case North:
-            movement_part = make_pair(snake_head.first - 1, snake_head.second);
+            movement_part = std::make_pair(snake_head.first - 1, snake_head.second);
             break;
         case East:
-            movement_part = make_pair(snake_head.first, snake_head.second + 1);
+            movement_part = std::make_pair(snake_head.first, snake_head.second + 1);
             break;
         case South:
-            movement_part = make_pair(snake_head.first + 1, snake_head.second);
+            movement_part = std::make_pair(snake_head.first + 1, snake_head.second);
             break;
     }
     snake_head = movement_part;
@@ -118,7 +111,7 @@ void Snake::ClearSnakeWorld(void) {
 
 void Snake::InitializeSnake(void) {
     for (int i = 0; i < INITIAL_SNAKE_LENGTH; i++) {
-        std::pair<int, int> snake_part = make_pair(MAP_HEIGHT / 2,
+        std::pair<int, int> snake_part = std::make_pair(MAP_HEIGHT / 2,
                                                    MAP_WIDTH / 2 - (INITIAL_SNAKE_LENGTH / 2) + i);
         snake_parts.push_back(snake_part);
         _snake_world_array[snake_part.first][snake_part.second] = 1;
