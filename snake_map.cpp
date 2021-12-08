@@ -1,13 +1,7 @@
 //
-// Created by jc on 06.12.2021.
+// Created by jc on 08.12.2021.
 //
-
-
-#include <vector>
-#include <iostream>
 #include "head.h"
-#include "snake_map.h"
-#include "color.h"
 
 SnakeMap::SnakeMap(Snake* snake){
     this->_snake = snake;
@@ -21,7 +15,7 @@ void SnakeMap::Draw(void) {
     system("clear");//refesh terminal
     UpdateScore();
 
-    std::vector<pair<int, int>> snake_parts = _snake->snake_parts;
+    std::vector<std::pair<int, int>> snake_parts = _snake->snake_parts;
 
     _map_array[snake_parts[0].first][snake_parts[0].second] = SNAKE_TAIL;//draw snake
     for (int i = 1; i < snake_parts.size(); i++) {
@@ -59,7 +53,7 @@ void SnakeMap::UpdateSnakeFood(bool force_update) {
             int random_i = rand() % MAP_WIDTH;
             int random_j = rand() % MAP_HEIGHT;
             if (_map_array[random_i][random_j] == MAP_CHAR) {
-                snake_food = make_pair(random_i, random_j);
+                snake_food = std::make_pair(random_i, random_j);
                 _snake->SetSnakeFood(snake_food);
                 _snake->food_eaten = false;
                 break;
@@ -69,7 +63,7 @@ void SnakeMap::UpdateSnakeFood(bool force_update) {
 }
 
 void SnakeMap::UpdateScore(void){
-    std::cout << FMAG("Score:") << _snake->length - INITIAL_SNAKE_LENGTH << endl;
+    std::cout << FMAG("Score:") << _snake->length - INITIAL_SNAKE_LENGTH << std::endl;
 }
 
 void ClearMap(char map_array[MAP_HEIGHT][MAP_WIDTH]) {//re drawing matrix
@@ -78,7 +72,7 @@ void ClearMap(char map_array[MAP_HEIGHT][MAP_WIDTH]) {//re drawing matrix
             /*if (i == MAP_HEIGHT - 1 || i == 0 || j == MAP_WIDTH - 1 || j == 0) {
                 map_array[i][j] = MAP_BARRIER;
             } else {*/
-                map_array[i][j] = MAP_CHAR;
+            map_array[i][j] = MAP_CHAR;
 
         }
     }
@@ -103,4 +97,5 @@ void UpdateSnakeHead(char map_array[MAP_HEIGHT][MAP_WIDTH], Snake *snake) {
     }
     map_array[snake->snake_head.first][snake->snake_head.second] = snake_head_char;
 }
+
 
