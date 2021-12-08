@@ -58,11 +58,7 @@ void Snake::UpdateNextDirection(enum Direction direction) {
 
 enum Direction Snake::GetDirection(void) {
     enum Direction result = this->_direction;
-    //sem_wait(&this->_snake_sema);
-
     result = this->_direction;
-
-    //sem_post(&this->_snake_sema);
     return result;
 }
 
