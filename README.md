@@ -1,10 +1,13 @@
 # snake_v3
-vertion final
-to compile in terminal
-g++ -std=c++17 main.cpp snake.cpp input.cpp snake_map.cpp -o snake -lpthread
+### vertion final
 
-"Snake"
-Score:xx
+###### to compile in terminal
+
+###### g++ -std=c++17 main.cpp snake.cpp input.cpp snake_map.cpp -o snake -lpthread
+
+# "Snake"
+
+```{.REPL}
 + + + + + + + + + + + + + + + + + + + + + 
 + . . . . . . . . . . . . . . . .^. . . .+
 + . . . . . . . . . . . . . . . ./. . . .+
@@ -27,3 +30,4 @@ Score:xx
 + . . . . . . . . . . . . . . . . . . . .+
 + . . . . . . . . . . . . . . . . . . . .+
 + + + + + + + + + + + + + + + + + + + + + 
+```
