@@ -1,4 +1,5 @@
-# snake_v3
+# snake
+
 ### vertion final
 
 ###### to compile in terminal
