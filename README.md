@@ -4,7 +4,7 @@
 
 ###### to compile in terminal
 
-###### g++ -std=c++17 main.cpp snake.cpp input.cpp snake_map.cpp -o snake -lpthread
+###### g++ -std=c++17 main.cpp snake.cpp snake_map.cpp -o snake -lpthread
 
 # "Snake"
 
