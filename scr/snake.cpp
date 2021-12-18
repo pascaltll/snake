@@ -1,8 +1,30 @@
-//
-// Created by jc on 08.12.2021.
-//
+#include "../scr/snake.h"
+#include <iostream>
 
-#include "head.h"
+enum Direction GetInput() {
+    enum Direction result = East;
+    char user_input = getchar();
+    std::cout <<user_input <<std::endl;
+    switch (user_input) {
+
+        case 'a':
+            result = West;
+            break;
+        case 'w':
+            result = North;
+            break;
+        case 'd':
+            result = East;
+            break;
+        case 's':
+            result = South;
+            break;
+        default:
+            result = Error;
+            break;
+    }
+    return result;
+}
 
 Snake::Snake(void) {
     _direction = East;
@@ -12,8 +34,7 @@ Snake::Snake(void) {
     length = INITIAL_SNAKE_LENGTH;
     ClearSnakeWorld();
     InitializeSnake();
-    //pthread_create(&_input_thread, NULL, InputThreadWork, this);//old option not compatible with cmake
-    _snake_thread = std::thread([this](){//compatible form
+    _snake_thread = std::thread([this](){
         auto *snake = (struct Snake *)this;
         while (true) {
             enum Direction direction = GetInput();
@@ -23,7 +44,6 @@ Snake::Snake(void) {
             snake->UpdateNextDirection(direction);
         }
         return this;
-
     });
 }
 
@@ -58,11 +78,7 @@ void Snake::UpdateNextDirection(enum Direction direction) {
 
 enum Direction Snake::GetDirection(void) {
     enum Direction result = this->_direction;
-    //sem_wait(&this->_snake_sema);
-
     result = this->_direction;
-
-    //sem_post(&this->_snake_sema);
     return result;
 }
 
@@ -128,8 +144,6 @@ void Snake::InitializeSnake(void) {
     snake_head = snake_parts[snake_parts.size() - 1];
 }
 bool Snake::IsEnd() {
-    bool result = false;
-    //if is in the range
     return snake_head.first < 0 || snake_head.first >= MAP_WIDTH ||
            snake_head.second < 0 || snake_head.second >= MAP_HEIGHT ||
            is_dead;
