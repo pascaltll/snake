@@ -3,7 +3,7 @@
 
 ###### to compile in terminal
 
-###### g++ -std=c++17 main.cpp snake.cpp input.cpp snake_map.cpp -o snake -lpthread
+###### g++ -std=c++17 scr/main.cpp scr/snake.cpp scr/snake_map.cpp scr/buffer_toggle.cpp -o snake -lpthread
 
 # "Snake"
 
