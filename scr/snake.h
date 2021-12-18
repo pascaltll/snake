@@ -11,12 +11,9 @@
 #define KYEL  "\x1B[33m"
 #define KMAG  "\x1B[35m"
 #define KCYN  "\x1B[36m"
-
-
 #define FRED(x) KRED x RST
 #define FMAG(x) KMAG x RST
 #define FCYN(x) KCYN x RST
-
 #define INITIAL_SNAKE_LENGTH 4
 #define MAP_WIDTH 20
 #define MAP_HEIGHT 20

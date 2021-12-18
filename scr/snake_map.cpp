@@ -1,4 +1,5 @@
 #include "../scr/snake_map.h"
+
 SnakeMap::SnakeMap(Snake* snake){
     this->_snake = snake;
     ClearMap(this->_map_array);
