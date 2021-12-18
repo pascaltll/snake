@@ -1,27 +1,21 @@
-//
-// Created by jc on 08.12.2021.
-//
-#include "head.h"
+#include "../scr/snake_map.h"
 
 SnakeMap::SnakeMap(Snake* snake){
     this->_snake = snake;
-    ClearMap(this->_map_array);//rewrite matrix
+    ClearMap(this->_map_array);
     srand(time(nullptr));
     UpdateSnakeFood(true);
 }
 
 void SnakeMap::Draw(void) {
     ClearMap(this->_map_array);
-    system("clear");//refesh terminal
+    system("clear");
     UpdateScore();
-
     std::vector<std::pair<int, int>> snake_parts = _snake->snake_parts;
-
-    _map_array[snake_parts[0].first][snake_parts[0].second] = SNAKE_TAIL;//draw snake
+    _map_array[snake_parts[0].first][snake_parts[0].second] = SNAKE_TAIL;
     for (int i = 1; i < snake_parts.size(); i++) {
         _map_array[snake_parts[i].first][snake_parts[i].second] = SNAKE_CHAR;
     }
-
     UpdateSnakeHead(_map_array, _snake);
     UpdateSnakeFood(false);
     _map_array[snake_food.first][snake_food.second] = SNAKE_FOOD_CHAR;
@@ -29,7 +23,7 @@ void SnakeMap::Draw(void) {
         std::cout <<"+ ";
     }
     std::cout << std::endl;
-    for (auto & i : _map_array) {//print matrixx
+    for (auto & i : _map_array) {
         std::cout <<"+";
         for (auto j : i) {
             if ( j == SNAKE_FOOD_CHAR) {
@@ -37,7 +31,6 @@ void SnakeMap::Draw(void) {
             } else {
                 std::cout << KYEL << j << FCYN(".");
             }
-
         }
         std::cout << "+" << std::endl;
     }
@@ -66,14 +59,10 @@ void SnakeMap::UpdateScore(void){
     std::cout << FMAG("Score:") << _snake->length - INITIAL_SNAKE_LENGTH << std::endl;
 }
 
-void ClearMap(char map_array[MAP_HEIGHT][MAP_WIDTH]) {//re drawing matrix
+void ClearMap(char map_array[MAP_HEIGHT][MAP_WIDTH]) {
     for (int i = 0; i < MAP_HEIGHT; i++) {
         for (int j = 0; j < MAP_WIDTH; j++) {
-            /*if (i == MAP_HEIGHT - 1 || i == 0 || j == MAP_WIDTH - 1 || j == 0) {
-                map_array[i][j] = MAP_BARRIER;
-            } else {*/
             map_array[i][j] = MAP_CHAR;
-
         }
     }
 }
