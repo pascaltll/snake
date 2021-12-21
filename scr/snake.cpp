@@ -1,4 +1,4 @@
-#include "../include/snake.h"
+#include "../include/snake/snake.h"
 #include <iostream>
 
 enum Direction GetInput() {

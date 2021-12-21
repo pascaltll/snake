@@ -1,4 +1,4 @@
-#include "../include/snake_map.h"
+#include "../include/snake/snake_map.h"
 
 SnakeMap::SnakeMap(Snake* snake){
     this->_snake = snake;

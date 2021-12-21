@@ -1,6 +1,6 @@
-#include "../include/main.h"
-#include "../include/snake.h"
-#include "../include/snake_map.h"
+#include "../include/snake/main.h"
+#include "../include/snake/snake.h"
+#include "../include/snake/snake_map.h"
 #include "../include/snake/buffer_toggle.h"
 
 

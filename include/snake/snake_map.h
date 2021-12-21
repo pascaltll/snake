@@ -9,7 +9,7 @@
 #define SNAKE_HEAD_SOUTH 'v'
 #define SNAKE_FOOD_CHAR 'O'
 #define SNAKE_TAIL '~'
-#include "../scr/snake.h"
+#include "snake.h"
 
 class SnakeMap {
 public:
