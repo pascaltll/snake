@@ -4,9 +4,7 @@
 enum Direction GetInput() {
     enum Direction result = East;
     char user_input = getchar();
-    std::cout <<user_input <<std::endl;
     switch (user_input) {
-
         case 'a':
             result = West;
             break;
@@ -108,7 +106,7 @@ void Snake::UpdateMovement(void) {
     snake_head = movement_part;
     snake_parts.push_back(movement_part);
     food_eaten = snake_head.first == _snake_food.first && snake_head.second == _snake_food.second;
-    if (food_eaten) {//HEAD == FOOD
+    if (food_eaten) {
         length++;
     } else {
         std::pair<int, int> tail = snake_parts.front();
