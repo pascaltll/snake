@@ -1,7 +1,3 @@
-//
-// Created by jc on 18.12.2021.
-//
-
 #include "../include/snake/buffer_toggle.h"
 void BufferToggle::Off() {
     tcgetattr(STDIN_FILENO, &t);

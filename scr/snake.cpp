@@ -1,5 +1,4 @@
 #include "../include/snake/snake.h"
-#include <iostream>
 
 enum Direction GetInput() {
     enum Direction result = East;
@@ -36,7 +35,7 @@ Snake::Snake(void) {
         auto *snake = (struct Snake *)this;
         while (true) {
             enum Direction direction = GetInput();
-            if(direction == 4){//just a solution for loop
+            if(direction == 4){
                 break;
             }
             snake->UpdateNextDirection(direction);
@@ -124,8 +123,7 @@ void Snake::SetSnakeFood(std::pair<int, int> snake_food) {
 }
 
 void Snake::ClearSnakeWorld(void) {
-    for (auto & i : _snake_world_array)
-    {
+    for (auto & i : _snake_world_array) {
         for (auto j : i) {
             j = 0;
         }
