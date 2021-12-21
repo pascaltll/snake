@@ -1,0 +1,10 @@
+# ninja log v5
+1	2908	1639792163494944756	CMakeFiles/snake.dir/scr/main.cpp.o	6ec5f7a74bb2991b
+21473	21616	1639792182215048347	lib/libgtest.a	4fbeebc07bfe4484
+0	84	1640091707322016027	build.ninja	56725e1ceb5a97a4
+2	5239	1639792165838957723	lib/googletest/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o	ff1d9b9536ac9280
+21641	21738	1639792182335049011	snake	8f22d6dd0bc0f1eb
+2	3239	1639792163790946393	CMakeFiles/snake.dir/scr/snake_map.cpp.o	4b8a7f0207d5e4bf
+3	21473	1639792182071047550	lib/googletest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o	bcf9d04a7bf556de
+2	3342	1639792163906947035	CMakeFiles/snake.dir/scr/snake.cpp.o	303fe257e1fc089c
+21616	21641	1639792182243048501	lib/libgtest_main.a	e1a96fbf44a0ed9f
