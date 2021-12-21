@@ -1,0 +1,4 @@
+# ninja log v5
+1	52	1640099394204177211	build.ninja	740bbdd7ed315a25
+1	849	1640099395060181609	CMakeFiles/snake.dir/scr/snake_map.cpp.o	de186a68686f3e2d
+0	1203	1640099395416183439	CMakeFiles/snake.dir/scr/snake.cpp.o	b19e6eb3289544d6
