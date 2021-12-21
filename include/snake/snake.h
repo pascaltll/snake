@@ -1,6 +1,3 @@
-/
-// Created by jc on 18.12.2021.
-//
 
 #ifndef SNAKE_SNAKE_H
 #define SNAKE_SNAKE_H
@@ -43,7 +40,6 @@ public:
     int length;
     bool IsEnd();
 private:
-    pthread_t _input_thread;//
     std::thread _snake_thread;
     enum Direction _direction;
     enum Direction _next_direction;
