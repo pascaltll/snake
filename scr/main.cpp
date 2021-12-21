@@ -1,7 +1,7 @@
-#include "../scr/main.h"
-#include "../scr/snake.h"
-#include "../scr/snake_map.h"
-#include "../scr/buffer_toggle.h"
+#include "../include/main.h"
+#include "../include/snake.h"
+#include "../include/snake_map.h"
+#include "../include/snake/buffer_toggle.h"
 
 
 

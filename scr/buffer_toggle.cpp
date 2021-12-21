@@ -2,7 +2,7 @@
 // Created by jc on 18.12.2021.
 //
 
-#include "buffer_toggle.h"
+#include "../include/snake/buffer_toggle.h"
 void BufferToggle::Off() {
     tcgetattr(STDIN_FILENO, &t);
     t.c_lflag &= ~ICANON;
