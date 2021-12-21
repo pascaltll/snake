@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated />
+  </component>
+  <component name="CMakeSettings">
+    <configurations />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9c980e05-dd3c-4d6a-b06f-dc2264d82ffe" name="Changes" comment="change place of headers">
+      <change beforePath="$PROJECT_DIR$/include/main.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/snake.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/snake/main.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/snake/main.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/snake/snake.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/snake/snake.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/snake/snake_map.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/snake/snake_map.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/snake_map.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scr/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/scr/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scr/snake.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/scr/snake.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scr/snake_map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/scr/snake_map.cpp" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="correction_3" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="cf.advertisement.text.has.clang-format" value="true" />
+    <property name="cf.advertisement.text.overridden" value="true" />
+    <property name="cmake.loaded.for.project" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/include/snake" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/include/snake" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/include/snake" />
+      <recent name="$PROJECT_DIR$/include" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="TaskManager">
+    <task id="LOCAL-00001" summary="change place of headers">
+      <created>1640093359584</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1640093359584</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="change place of headers" />
+    <option name="LAST_COMMIT_MESSAGE" value="change place of headers" />
+  </component>
+</project>

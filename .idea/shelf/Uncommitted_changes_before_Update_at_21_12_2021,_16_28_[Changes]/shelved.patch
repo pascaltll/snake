@@ -1,0 +1,197 @@
+Index: scr/main.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#include \"../scr/main.h\"\n#include \"../scr/snake.h\"\n#include \"../scr/snake_map.h\"\n\nvoid BufferToggle::Off() {\n    tcgetattr(STDIN_FILENO, &t);\n    t.c_lflag &= ~ICANON;\n    tcsetattr(STDIN_FILENO, TCSANOW, &t);\n}\n\nvoid BufferToggle::On() {\n    tcgetattr(STDIN_FILENO, &t);\n    t.c_lflag |= ICANON;\n    tcsetattr(STDIN_FILENO, TCSANOW, &t);\n}\n\nSnake snake;\nSnakeMap snake_map(&snake);\nBufferToggle bf{};\n\nbool IsEnd() {\n    std::pair<int, int> snake_head = snake.snake_head;\n    return snake_head.first < 0 || snake_head.first >= MAP_WIDTH ||\n           snake_head.second < 0 || snake_head.second >= MAP_HEIGHT ||\n           snake.is_dead;\n}\n\nvoid GameOver() {\n    system(\"clear\");\n    std::cout << FRED(\"GAME  OVER\") << std::endl;\n}\n\nvoid StartLoop() {\n    bf.Off();\n    while (true) {\n        snake.UpdateMovement();\n        if (IsEnd()) {\n            GameOver();\n            break;\n        }\n        snake_map.Draw();\n        usleep(DELAY_TERMINAL);\n        snake.ValidateDirection();\n    }\n}\n\nint main(int argc, char* argv[]) {\n    StartLoop();\n    return 0;\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/scr/main.cpp b/scr/main.cpp
+--- a/scr/main.cpp	(revision ec0f32d668a43a22966f21b87469a25682c94f75)
++++ b/scr/main.cpp	(date 1640093073748)
+@@ -1,6 +1,6 @@
+-#include "../scr/main.h"
+-#include "../scr/snake.h"
+-#include "../scr/snake_map.h"
++#include "../include/main.h"
++#include "../include/snake.h"
++#include "../include/snake_map.h"
+ 
+ void BufferToggle::Off() {
+     tcgetattr(STDIN_FILENO, &t);
+Index: scr/snake.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#include \"../scr/snake.h\"\n#include <iostream>\n\nenum Direction GetInput() {\n    enum Direction result = East;\n    char user_input = getchar();\n    std::cout <<user_input <<std::endl;\n    switch (user_input) {\n\n        case 'a':\n            result = West;\n            break;\n        case 'w':\n            result = North;\n            break;\n        case 'd':\n            result = East;\n            break;\n        case 's':\n            result = South;\n            break;\n        default:\n            result = Error;\n            break;\n    }\n    return result;\n}\n\nSnake::Snake(void) {\n    _direction = East;\n    _next_direction = _direction;\n    food_eaten = false;\n    is_dead = false;\n    length = INITIAL_SNAKE_LENGTH;\n    ClearSnakeWorld();\n    InitializeSnake();\n    _snake_thread = std::thread([this](){\n        auto *snake = (struct Snake *)this;\n        while (true) {\n            enum Direction direction = GetInput();\n            if(direction == 4){//just a solution for loop\n                break;\n            }\n            snake->UpdateNextDirection(direction);\n        }\n        return this;\n    });\n}\n\nvoid Snake::UpdateDirection(enum Direction direction) {\n    switch (direction) {\n        case West:\n            if (this->_direction != East) {\n                this->_direction = direction;\n            }\n            break;\n        case North:\n            if (this->_direction != South) {\n                this->_direction = direction;\n            }\n            break;\n        case East:\n            if (this->_direction != West) {\n                this->_direction = direction;\n            }\n            break;\n        case South:\n            if (this->_direction != North) {\n                this->_direction = direction;\n            }\n            break;\n    }\n}\n\nvoid Snake::UpdateNextDirection(enum Direction direction) {\n    this->_next_direction = direction;\n}\n\nenum Direction Snake::GetDirection(void) {\n    enum Direction result = this->_direction;\n    result = this->_direction;\n    return result;\n}\n\nvoid Snake::ValidateDirection(void) {\n    if (_next_direction != Error) {\n        UpdateDirection(_next_direction);\n    }\n}\n\nvoid Snake::UpdateMovement(void) {\n    std::pair<int, int> movement_part;\n    enum Direction direction = GetDirection();\n    switch (direction) {\n        case West:\n            movement_part = std::make_pair(snake_head.first, snake_head.second - 1);\n            break;\n        case North:\n            movement_part = std::make_pair(snake_head.first - 1, snake_head.second);\n            break;\n        case East:\n            movement_part = std::make_pair(snake_head.first, snake_head.second + 1);\n            break;\n        case South:\n            movement_part = std::make_pair(snake_head.first + 1, snake_head.second);\n            break;\n    }\n    snake_head = movement_part;\n    snake_parts.push_back(movement_part);\n    food_eaten = snake_head.first == _snake_food.first && snake_head.second == _snake_food.second;\n    if (food_eaten) {//HEAD == FOOD\n        length++;\n    } else {\n        std::pair<int, int> tail = snake_parts.front();\n        _snake_world_array[tail.first][tail.second]--;\n        snake_parts.erase(snake_parts.begin());\n    }\n    int head_value = ++_snake_world_array[snake_head.first][snake_head.second];\n    if (head_value > 1) {\n        is_dead = true;\n    }\n}\n\nvoid Snake::SetSnakeFood(std::pair<int, int> snake_food) {\n    this->_snake_food = snake_food;\n}\n\nvoid Snake::ClearSnakeWorld(void) {\n    for (auto & i : _snake_world_array)\n    {\n        for (auto j : i) {\n            j = 0;\n        }\n    }\n}\n\nvoid Snake::InitializeSnake(void) {\n    for (int i = 0; i < INITIAL_SNAKE_LENGTH; i++) {\n        std::pair<int, int> snake_part = std::make_pair(MAP_HEIGHT / 2,\n                                                   MAP_WIDTH / 2 - (INITIAL_SNAKE_LENGTH / 2) + i);\n        snake_parts.push_back(snake_part);\n        _snake_world_array[snake_part.first][snake_part.second] = 1;\n    }\n    snake_head = snake_parts[snake_parts.size() - 1];\n}\nbool Snake::IsEnd() {\n    return snake_head.first < 0 || snake_head.first >= MAP_WIDTH ||\n           snake_head.second < 0 || snake_head.second >= MAP_HEIGHT ||\n           is_dead;\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/scr/snake.cpp b/scr/snake.cpp
+--- a/scr/snake.cpp	(revision ec0f32d668a43a22966f21b87469a25682c94f75)
++++ b/scr/snake.cpp	(date 1640093073492)
+@@ -1,4 +1,4 @@
+-#include "../scr/snake.h"
++#include "../include/snake.h"
+ #include <iostream>
+ 
+ enum Direction GetInput() {
+Index: scr/snake_map.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#include \"../scr/snake_map.h\"\n\nSnakeMap::SnakeMap(Snake* snake){\n    this->_snake = snake;\n    ClearMap(this->_map_array);\n    srand(time(nullptr));\n    UpdateSnakeFood(true);\n}\n\nvoid SnakeMap::Draw(void) {\n    ClearMap(this->_map_array);\n    system(\"clear\");\n    UpdateScore();\n    std::vector<std::pair<int, int>> snake_parts = _snake->snake_parts;\n    _map_array[snake_parts[0].first][snake_parts[0].second] = SNAKE_TAIL;\n    for (int i = 1; i < snake_parts.size(); i++) {\n        _map_array[snake_parts[i].first][snake_parts[i].second] = SNAKE_CHAR;\n    }\n    UpdateSnakeHead(_map_array, _snake);\n    UpdateSnakeFood(false);\n    _map_array[snake_food.first][snake_food.second] = SNAKE_FOOD_CHAR;\n    for (int i = 0; i < MAP_WIDTH + 1; ++i) {\n        std::cout <<\"+ \";\n    }\n    std::cout << std::endl;\n    for (auto & i : _map_array) {\n        std::cout <<\"+\";\n        for (auto j : i) {\n            if ( j == SNAKE_FOOD_CHAR) {\n                std::cout << KGRN << j << FCYN(\".\");\n            } else {\n                std::cout << KYEL << j << FCYN(\".\");\n            }\n        }\n        std::cout << \"+\" << std::endl;\n    }\n    for (int i = 0; i < MAP_WIDTH + 1; ++i) {\n        std::cout <<\"+ \";\n    }\n    std::cout << std::endl;\n}\n\nvoid SnakeMap::UpdateSnakeFood(bool force_update) {\n    if (_snake->food_eaten || force_update) {\n        while (true) {\n            int random_i = rand() % MAP_WIDTH;\n            int random_j = rand() % MAP_HEIGHT;\n            if (_map_array[random_i][random_j] == MAP_CHAR) {\n                snake_food = std::make_pair(random_i, random_j);\n                _snake->SetSnakeFood(snake_food);\n                _snake->food_eaten = false;\n                break;\n            }\n        }\n    }\n}\n\nvoid SnakeMap::UpdateScore(void){\n    std::cout << FMAG(\"Score:\") << _snake->length - INITIAL_SNAKE_LENGTH << std::endl;\n}\n\nvoid ClearMap(char map_array[MAP_HEIGHT][MAP_WIDTH]) {\n    for (int i = 0; i < MAP_HEIGHT; i++) {\n        for (int j = 0; j < MAP_WIDTH; j++) {\n            map_array[i][j] = MAP_CHAR;\n        }\n    }\n}\n\nvoid UpdateSnakeHead(char map_array[MAP_HEIGHT][MAP_WIDTH], Snake *snake) {\n    char snake_head_char = SNAKE_CHAR;\n    enum Direction direction = snake->GetDirection();\n    switch (direction) {\n        case West:\n            snake_head_char = SNAKE_HEAD_WEST;\n            break;\n        case North:\n            snake_head_char = SNAKE_HEAD_NORTH;\n            break;\n        case East:\n            snake_head_char = SNAKE_HEAD_EAST;\n            break;\n        case South:\n            snake_head_char = SNAKE_HEAD_SOUTH;\n            break;\n    }\n    map_array[snake->snake_head.first][snake->snake_head.second] = snake_head_char;\n}\n\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/scr/snake_map.cpp b/scr/snake_map.cpp
+--- a/scr/snake_map.cpp	(revision ec0f32d668a43a22966f21b87469a25682c94f75)
++++ b/scr/snake_map.cpp	(date 1640093073288)
+@@ -1,4 +1,4 @@
+-#include "../scr/snake_map.h"
++#include "../include/snake_map.h"
+ 
+ SnakeMap::SnakeMap(Snake* snake){
+     this->_snake = snake;
+Index: include/snake/snake.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/include/snake/snake.h b/include/snake/snake.h
+new file mode 100644
+--- /dev/null	(date 1639787458060)
++++ b/include/snake/snake.h	(date 1639787458060)
+@@ -0,0 +1,56 @@
++//
++// Created by jc on 18.12.2021.
++//
++
++#ifndef SNAKE_SNAKE_H
++#define SNAKE_SNAKE_H
++
++#define RST  "\x1B[0m"
++#define KRED  "\x1B[31m"
++#define KGRN  "\x1B[32m"
++#define KYEL  "\x1B[33m"
++#define KMAG  "\x1B[35m"
++#define KCYN  "\x1B[36m"
++#define FRED(x) KRED x RST
++#define FMAG(x) KMAG x RST
++#define FCYN(x) KCYN x RST
++#define INITIAL_SNAKE_LENGTH 4
++#define MAP_WIDTH 20
++#define MAP_HEIGHT 20
++#include <vector>
++#include <thread>
++#include <iostream>
++
++enum Direction {
++    Error = -1,
++    West = 0, North = 1, East = 2, South = 3
++};
++enum Direction GetInput();
++
++class Snake {
++public:
++    Snake();
++    void UpdateDirection(enum Direction direction);
++    void UpdateNextDirection(enum Direction direction);
++    enum Direction GetDirection();
++    void ValidateDirection();
++    std::vector<std::pair<int, int>> snake_parts;
++    std::pair<int, int> snake_head;
++    void UpdateMovement();
++    void SetSnakeFood(std::pair<int, int> snake_food);
++    bool food_eaten;
++    bool is_dead;
++    int length;
++    bool IsEnd();
++private:
++    pthread_t _input_thread;//
++    std::thread _snake_thread;
++    enum Direction _direction;
++    enum Direction _next_direction;
++    std::pair<int, int> _snake_food;
++    int _snake_world_array[MAP_HEIGHT][MAP_WIDTH];
++    void ClearSnakeWorld();
++    void InitializeSnake();
++};
++
++#endif //SNAKE_SNAKE_H
+Index: include/snake_map.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/include/snake_map.h b/include/snake_map.h
+new file mode 100644
+--- /dev/null	(date 1640093073900)
++++ b/include/snake_map.h	(date 1640093073900)
+@@ -0,0 +1,31 @@
++#ifndef SNAKE_SNAKE_MAP_H
++#define SNAKE_SNAKE_MAP_H
++
++#define MAP_CHAR ' '
++#define SNAKE_CHAR '/'
++#define SNAKE_HEAD_WEST '<'
++#define SNAKE_HEAD_NORTH '^'
++#define SNAKE_HEAD_EAST '>'
++#define SNAKE_HEAD_SOUTH 'v'
++#define SNAKE_FOOD_CHAR 'O'
++#define SNAKE_TAIL '~'
++#include "snake.h"
++
++class SnakeMap {
++public:
++    SnakeMap(Snake *snake);
++    void Draw();
++    std::pair<int, int> snake_food;
++    void UpdateSnakeFood(bool force_update);
++    void UpdateScore();
++
++private:
++    char _map_array[MAP_HEIGHT][MAP_WIDTH];
++    Snake* _snake;
++};
++
++void ClearMap(char map_array[MAP_HEIGHT][MAP_WIDTH]);
++
++void UpdateSnakeHead(char map_array[MAP_HEIGHT][MAP_WIDTH], Snake *snake);
++
++#endif //SNAKE_SNAKE_MAP_H
+Index: include/snake/main.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/include/snake/main.h b/include/snake/main.h
+new file mode 100644
+--- /dev/null	(date 1639786683448)
++++ b/include/snake/main.h	(date 1639786683448)
+@@ -0,0 +1,19 @@
++//
++// Created by jc on 18.12.2021.
++//
++#ifndef SNAKE_MAIN_H
++#define SNAKE_MAIN_H
++
++#include "termios.h"
++#include <unistd.h>
++#define DELAY_TERMINAL 150000
++
++class BufferToggle {
++private:
++    struct termios t;
++public:
++    void Off();
++    void On();
++};
++
++#endif //SNAKE_MAIN_H
+diff --git a/scr/snake_map.h b/include/snake/snake_map.h
+rename from scr/snake_map.h
+rename to include/snake/snake_map.h
+diff --git a/scr/main.h b/include/main.h
+rename from scr/main.h
+rename to include/main.h
+diff --git a/scr/snake.h b/include/snake.h
+rename from scr/snake.h
+rename to include/snake.h
